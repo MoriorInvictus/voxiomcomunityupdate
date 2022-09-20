@@ -1,7 +1,7 @@
 {
-	"name": "Voxiom Comunity Updater",
-	"description": "Voxiom Comunity Updater",
-	"version": "0.0.1",
+	"name": "Voxiom Community Updater",
+	"description": "Voxiom Community Updater",
+	"version": "0.0.2",
 	"manifest_version": 3,
 	"permissions": ["declarativeContent", "browsingData", "tabs", "scripting", "storage", "unlimitedStorage"],
 	"host_permissions": ["*://*.voxiom.io/*"],
@@ -25,7 +25,7 @@
 		"service_worker": "assets/js/background.js"
 	},	
 	"action": {
-		"default_title": "Voxiom Comunity Updater",
+		"default_title": "Voxiom Community Updater",
 		"default_icon": "assets/icons/favicon-32x32.png",
 		"default_popup": "popup.html"
 	},
