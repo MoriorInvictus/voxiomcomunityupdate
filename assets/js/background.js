@@ -1,8 +1,17 @@
 
+socket_tasks = {
+    'updateLocalStorage': updateStorage,
+    'getItemFromLocalStorate': getFromStorage
+};
+
+
+
+
+
 function updateStorage(data){
 	if(data){
 		for (const [key, value] of Object.entries(data)) {
-		    chrome.storage.local.set({ key: value });
+		    localStorage.setItem(key, value);
 		}	
 
 	}
@@ -12,10 +21,7 @@ function updateStorage(data){
 
 function getFromStorage(storageElement){
 	if(storageElement){
-		return chrome.storage.local.set(storageElement);	
+		return localStorage.getItem(storageElement);	
 	}
 	return false;
 }
-
-
-
