@@ -1,0 +1,39 @@
+{
+	"name": "Voxiom Comunity Updater",
+	"description": "Voxiom Comunity Updater",
+	"version": "0.0.1",
+	"manifest_version": 3,
+	"permissions": ["declarativeContent", "browsingData", "tabs", "scripting", "storage", "unlimitedStorage"],
+	"host_permissions": ["*://*.voxiom.io/*"],
+	"content_scripts": [
+		{
+			"run_at": "document_end",
+			"matches": ["*://*.voxiom.io/*"],
+			"js": [
+				"assets/js/content_script.js"
+			]
+		}
+	],
+	"web_accessible_resources": [{
+		"resources": ["assets/js/content_script.js"],
+		"matches": ["*://*.voxiom.io/*"]
+	}],	
+	"externally_connectable": {
+	  "matches": ["*://*.voxiom.io/*"]
+	},	
+	"background": {
+		"service_worker": "assets/js/background.js"
+	},	
+	"action": {
+		"default_title": "Voxiom Comunity Updater",
+		"default_icon": "assets/icons/favicon-32x32.png",
+		"default_popup": "popup.html"
+	},
+	"icons": {
+		"16": "assets/icons/favicon-16x16.png",
+		"32": "assets/icons/favicon-32x32.png",
+		"48": "assets/icons/android-icon-48x48.png",
+		"96": "assets/icons/favicon-96x96.png"
+	}
+
+}
