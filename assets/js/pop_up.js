@@ -262,21 +262,7 @@ async function sendMessageToActiveTab(messageArgs, callback) {
 
 
 
-changeFontBtn = getElement('#change-font');
-
-changeFontBtn.onclick = async function(e) {
-
-	getNewGoogleFontLink = getElement('input#googleFontLink');
-	if(getNewGoogleFontLink && getNewGoogleFontLink.value){
-	    await sendMessageToActiveTab({ task: 'handleFontUpdate', args: [getNewGoogleFontLink.value,] }, function(response) {console.log(response.status);});
-	}
-
-
-}
-
-
-
-
+const _DEFAULT_INPUT_VALUE = 15;
 
 
 
@@ -344,59 +330,75 @@ if(fontsSizeInputs && fontsSizeInputs.length > 0){
 
 }
 
-/* ########################################################## Global Font Size Changing #################################################################### */
 
-changeFontGlobalSizeBtn = getElementById('changeFontGlobalSizeBtn');
-if(changeFontGlobalSizeBtn){
+function handleInputUpdate(updates) {
+	updates.forEach(update => {
 
-	changeFontGlobalSizeBtn.onclick = async function(e) {
-		globalFontSizeInput = getElementById('globalFontSize');
-		if(globalFontSizeInput && globalFontSizeInput.value){
-			newFontSize = globalFontSizeInput.value;
-		} else {
-			newFontSize = 15;
+		currentUpdateBtn = getElementById(update.updateBtnId);
+		if(currentUpdateBtn){
+			currentUpdateBtn.onclick = async function(e) {
+				currentUpdateInput = getElementById(update.inputId);
+				if(currentUpdateInput && currentUpdateInput.value){
+					newInputValue = currentUpdateInput.value;
+				} else {
+					newInputValue = _DEFAULT_INPUT_VALUE;
+				}
+
+				await sendMessageToActiveTab({ task: update.taskUpdateName, args: [newInputValue] }, update.callback);
+			}
 		}
 
-		await sendMessageToActiveTab({ task: 'updateGlobalFontSize', args: [newFontSize] }, function(response) {console.log(response.status);});
-	}
+
+
+	})
 }
 
+function handleInputReset(updates) {
+	updates.forEach(update => {
 
-resetFontGlobalSizeBtn = getElementById('resetFontGlobalSizeBtn');
-if(resetFontGlobalSizeBtn){
-	resetFontGlobalSizeBtn.onclick = async function(e) {
-		await sendMessageToActiveTab({ task: 'updateGlobalFontSize', args: [15] }, function(response) {console.log(response.status);});
-	}
-}
-
-/* ########################################################## Global Font Size Changing #################################################################### */
-
-
-/* ########################################################## Chat Font Size Changing #################################################################### */
-
-changeChatMessageFontSizeBtn = getElementById('changeChatMessageFontSizeBtn');
-if(changeChatMessageFontSizeBtn){
-
-	changeChatMessageFontSizeBtn.onclick = async function(e) {
-		chatMessageFontSizeInput = getElementById('changeChatMessageFontSize');
-		if(chatMessageFontSizeInput && chatMessageFontSizeInput.value){
-			newChatMessageFontSize = chatMessageFontSizeInput.value;
-		} else {
-			newChatMessageFontSize = 15;
+		currentResetBtnUpdate = getElementById(update.resetBtnId);
+		if(currentResetBtnUpdate){
+			currentResetBtnUpdate.onclick = async function(e) {
+				await sendMessageToActiveTab({ task: update.taskResetName, args: update.resetTaskArgs }, update.callback);
+			}
 		}
-		
-		log(newChatMessageFontSize);
-		await sendMessageToActiveTab({ task: 'handleChatFontSizeChanging', args: [newChatMessageFontSize] }, function(response) {console.log(response.status);});
-	}
+
+	})
 }
 
+inputUpdateTasks = [
+	
+	{
+		'updateBtnId': 'change-font',
+		'resetBtnId': 'resetFontBtn',
+		'inputId': 'googleFontLink',
+		'taskUpdateName': 'handleFontUpdate',
+		'taskResetName': 'resetFont',
+		'resetTaskArgs': ['lato,Helvetica,sans-serif'],
+		'callback': response => {log('Done')},
+	},
+	{
+		'updateBtnId': 'changeFontGlobalSizeBtn',
+		'resetBtnId': 'resetFontGlobalSizeBtn',
+		'inputId': 'globalFontSize',
+		'taskUpdateName': 'updateGlobalFontSize',
+		'taskResetName': 'updateGlobalFontSize',
+		'resetTaskArgs': [_DEFAULT_INPUT_VALUE],
+		'callback': response => {log('Done')},
+	},	
+	{
+		'updateBtnId': 'changeChatMessageFontSizeBtn',
+		'resetBtnId': 'resetChatMessageFontSize',
+		'inputId': 'changeChatMessageFontSize',
+		'taskUpdateName': 'handleChatFontSizeChanging',
+		'resetTaskArgs': [_DEFAULT_INPUT_VALUE],
+		'taskResetName': 'handleChatFontSizeChanging',
+		'callback': response => {log('Done')},
+	},
 
-resetChatMessageFontSize = getElementById('resetChatMessageFontSize');
-if(resetChatMessageFontSize){
-	resetChatMessageFontSize.onclick = async function(e) {
-		await sendMessageToActiveTab({ task: 'handleChatFontSizeChanging', args: [15] }, function(response) {console.log(response.status);});
-	}
-}
-/* ########################################################## Chat Font Size Changing #################################################################### */
+];
 
+
+handleInputUpdate(inputUpdateTasks);
+handleInputReset(inputUpdateTasks);
 
