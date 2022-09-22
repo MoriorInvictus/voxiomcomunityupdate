@@ -181,8 +181,6 @@ const updateExternalFontFromUrl = _ => {
 
 
 
-
-
 const handleFontUpdate = url => {
 
 	updateStorage({

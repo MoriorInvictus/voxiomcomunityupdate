@@ -290,10 +290,7 @@ if(clearInputsControls.length > 0){
 
 function updateStorage(data, callback){
 	if(data){
-		for (const [key, value] of Object.entries(data)) {
-		    chrome.storage.local.set({ key: value }, callback);
-		}	
-
+	    chrome.storage.local.set(data, callback);
 	}
 
 	return false;
@@ -353,7 +350,7 @@ function initInputUpdateHandlers(inputsUpdates) {
 				}
 				if(inputUpdates.updateLocalStorageBeforeSending){
 					currentInputUpdateStorageItem = inputUpdates.localStorageItem;
-					// await sendMessageToActiveTab({ task: 'updateLocalStorage', args: [{currentInputUpdateStorageItem: newInputValue}] }, inputUpdates.callback);
+					updateStorage({currentInputUpdateStorageItem:newInputValue}, inputUpdates.callback);
 				}
 				await sendMessageToActiveTab({ task: inputUpdates.taskUpdateName, args: [newInputValue] }, inputUpdates.callback);
 			}
@@ -373,7 +370,7 @@ function initInputResetHandlers(inputsUpdates) {
 				if(inputUpdates.updateLocalStorageBeforeSending){
 					currentInputUpdateStorageItem = inputUpdates.localStorageItem;
 					newInputValue = inputUpdates.resetTaskArgs[0];
-					// await sendMessageToActiveTab({ task: 'updateLocalStorage', args: [{currentInputUpdateStorageItem: newInputValue}] }, inputUpdates.callback);
+					updateStorage({currentInputUpdateStorageItem:newInputValue}, inputUpdates.callback);
 				}		
 				await sendMessageToActiveTab({ task: inputUpdates.taskResetName, args: inputUpdates.resetTaskArgs }, inputUpdates.callback);
 			}
@@ -386,14 +383,7 @@ function initInputUpdateHandlersCurrentValue(inputsUpdates) {
 	for (const inputUpdates of inputsUpdates) {
 		currentUpdateInput = getElementById(inputUpdates.inputId);
 		if(currentUpdateInput){
-			currentUpdateInputStorageItemValue = '';
-			currentInputUpdateStorageItem = inputUpdates.localStorageItem;
-			newInputValue = inputUpdates.resetTaskArgs[0];
-			currentUpdateInputStorageItem = sendMessageToActiveTab({ task: 'getFromStorage', args: [{currentInputUpdateStorageItem: newInputValue}] }, function(result){
-				log(result);
-				// currentUpdateInputStorageItemValue = result.value;
-			});
-			// currentUpdateInputStorageItem = getFromStorage(inputUpdates.localStorageItem, inputUpdates.getLocalStorageItemCallback);
+			currentUpdateInputStorageItem = getFromStorage(inputUpdates.localStorageItem, inputUpdates.getLocalStorageItemCallback);
 			if(currentUpdateInputStorageItem && currentUpdateInputStorageItem !== undefined){
 				currentUpdateInput.value = currentUpdateInputStorageItem;
 			}
