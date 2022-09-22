@@ -1,7 +1,7 @@
 {
 	"name": "Voxiom Community Updater",
 	"description": "Voxiom Community Updater",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"manifest_version": 3,
 	"permissions": ["declarativeContent", "browsingData", "tabs", "scripting", "storage", "unlimitedStorage"],
 	"host_permissions": ["*://*.voxiom.io/*"],
