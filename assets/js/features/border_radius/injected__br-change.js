@@ -32,9 +32,16 @@ function updateBorderRadius() {
 	};
 
 
+	addingPaddingLeftToBars = {
+
+	    "padding": `15px !important`
+	};
+
+
 	objectToTagStyles('#app *:not(.bNczYf):not(.fsQUZP)', borderRadiusChangeStyles);
 	objectToTagStyles('#app .sc-cdFzKX.iXWCkR *', borderRadiusChangeStylesForChat);
 	objectToTagStyles('#app .sc-cdFzKX.iXWCkR .sc-bgtQTB.gGZKza', borderRadiusChangeStylesForChatInput);
+	objectToTagStyles('#app .gZKSDH', addingPaddingLeftToBars);
 }
 
 updateBorderRadius();
