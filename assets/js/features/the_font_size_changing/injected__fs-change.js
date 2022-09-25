@@ -8,10 +8,24 @@ function updateGlobalFontSize() {
 
 	globalFontSizeStyle = {
 
-	    "font-size": `${globalFontSizeFromCache}px`
+	    "font-size": `${globalFontSizeFromCache}px !important`,
+	    "text-align": 'center'
 	};
 
-	objectToTagStyles('html, body', globalFontSizeStyle);
+	globalFontSizeStyle2 = {
+
+	    "font-size": `${globalFontSizeFromCache}px !important`,
+	};
+	globalFontSizeStyle3 = {
+
+	    "margin-bottom": `5px`,
+	};
+
+	objectToTagStyles('body *', globalFontSizeStyle);
+	objectToTagStyles('.sc-ZOtfp.eNTLY *', globalFontSizeStyle);
+	objectToTagStyles('.sc-gSQFLo.ixZJA *', globalFontSizeStyle2);
+	objectToTagStyles('.sc-gjNHFA.fVHIjH *', globalFontSizeStyle2);
+	objectToTagStyles('.sc-lbhJGD.fYyclM', globalFontSizeStyle2);
 
 }
 
@@ -56,4 +70,4 @@ function upadteChatFontSize() {
 
 
 
-dateGlobalFontSize();
+updateGlobalFontSize();

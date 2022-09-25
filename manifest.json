@@ -19,6 +19,7 @@
 				"assets/js/content_script.js"
 			],
 			"css": [
+				"assets/css/features/main-page-adjustments/main.css",
 				"assets/css/features/change_bg/main.css"
 			]
 		}
