@@ -154,7 +154,8 @@ inputUpdateTasks = [
 		'getLocalStorageItemCallback': result => {log('Value currently is ' + result.key)},
 		'localStorageItem': 'voxiomBgImage',
 		'callback': response => {log('Done')},
-	},	{
+	},
+	{
 		'updateBtnId': 'change-font',
 		'resetBtnId': 'resetFontBtn',
 		'processBeforeSend': false,
@@ -197,6 +198,21 @@ inputUpdateTasks = [
 		'localStorageItem': 'voxiomChatFontSize',
 		'callback': response => {log('Done')},
 	},
+	{
+		'updateBtnId': 'changeBorderRadius',
+		'resetBtnId': 'resetBorderRadius',
+		'processBeforeSend': false,
+		'defaultValue': 0,
+		'inputId': 'borderRadiusInput',
+		'taskUpdateName': 'handleBorderRadiusUpdate',
+		'taskResetName': 'handleBorderRadiusUpdate',
+		'resetTaskArgs': [0],
+		'updateLocalStorageBeforeSending': true,
+		'updateLocalStorageItemCallback': _ => {log('Storage was updated;')},
+		'getLocalStorageItemCallback': result => {log('Value currently is ' + result.key)},
+		'localStorageItem': 'voxiomBorderRadius',
+		'callback': response => {log('Done')},
+	},	
 
 ];
 

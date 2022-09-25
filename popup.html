@@ -19,15 +19,6 @@
 				<div class="voxiom__window-content">
 					<div class="voxiom__switches">
 						
-						<div class="voxiom__switch toggle-element with-delay" data-toggle_element="changebg" data-toggle_clear=".voxiom__window">
-							<div class="voxiom__switch-title">Change Home Page Background</div>
-							<label class="switch">
-								<input type="checkbox">
-								<span class="toggle-slider"></span>
-							</label>
-						</div>
-
-
 						<div class="voxiom__switch toggle-element with-delay" data-toggle_element="font-family-window" data-toggle_clear=".voxiom__window">
 							<div class="voxiom__switch-title">Change Font</div>
 							<label class="switch">
@@ -38,6 +29,21 @@
 
 						<div class="voxiom__switch toggle-element with-delay" data-toggle_element="font-size-window" data-toggle_clear=".voxiom__window">
 							<div class="voxiom__switch-title">Change Font Size</div>
+							<label class="switch">
+								<input type="checkbox">
+								<span class="toggle-slider"></span>
+							</label>
+						</div>
+						<div class="voxiom__switch toggle-element with-delay" data-toggle_element="changebg" data-toggle_clear=".voxiom__window">
+							<div class="voxiom__switch-title">Change Home Page Background</div>
+							<label class="switch">
+								<input type="checkbox">
+								<span class="toggle-slider"></span>
+							</label>
+						</div>
+						
+						<div class="voxiom__switch toggle-element with-delay" data-toggle_element="change-border-radius" data-toggle_clear=".voxiom__window">
+							<div class="voxiom__switch-title">Change Border Roundness</div>
 							<label class="switch">
 								<input type="checkbox">
 								<span class="toggle-slider"></span>
@@ -140,12 +146,34 @@
 				</div>
 
 			</div>
+			<div class="voxiom__window change-border-radius">
+				<div class="voxiom__window-title">Change Border Roundness</div>
+				<div class="voxiom__window-content">
+
+					<div class="fonts-wrapper">
+						
+						<div class="update-font-style">
+							
+							<div class="font-element-title">Border Roundness:</div>
+							<input type="number" class="def-input" id="borderRadiusInput" placeholder="14" min="0" max="100">
+							<button class="voxiom__control-btn accept-btn" id="changeBorderRadius"><svg id="Layer_1" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m23.707 16.325a1 1 0 0 0 -1.414 0l-5.627 5.628-2.688-2.653a1 1 0 0 0 -1.435 1.4l2.744 2.7a1.876 1.876 0 0 0 1.345.6h.033a1.873 1.873 0 0 0 1.335-.553l5.707-5.708a1 1 0 0 0 0-1.414z"/><path d="m11.09 21.959a10 10 0 1 1 10.91-9.959c0 .307-.015.611-.041.911a1 1 0 0 0 .907 1.089.989.989 0 0 0 1.085-.907c.032-.363.049-.726.049-1.093a12 12 0 1 0 -13.09 11.951h.091a1 1 0 0 0 .089-2z"/><path d="m11 7v4.586l-2.707 2.707a1 1 0 1 0 1.414 1.414l3-3a1 1 0 0 0 .293-.707v-5a1 1 0 0 0 -2 0z"/></svg>	</button>
+							<button class="voxiom__control-btn reset-btn" id="resetBorderRadius"> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 513.806 513.806" style="enable-background:new 0 0 513.806 513.806;" xml:space="preserve" width="512" height="512"> <g> <path d="M66.074,228.731C81.577,123.379,179.549,50.542,284.901,66.045c35.944,5.289,69.662,20.626,97.27,44.244l-24.853,24.853   c-8.33,8.332-8.328,21.84,0.005,30.17c3.999,3.998,9.423,6.245,15.078,6.246h97.835c11.782,0,21.333-9.551,21.333-21.333V52.39   c-0.003-11.782-9.556-21.331-21.338-21.329c-5.655,0.001-11.079,2.248-15.078,6.246L427.418,65.04   C321.658-29.235,159.497-19.925,65.222,85.835c-33.399,37.467-55.073,83.909-62.337,133.573   c-2.864,17.607,9.087,34.202,26.693,37.066c1.586,0.258,3.188,0.397,4.795,0.417C50.481,256.717,64.002,244.706,66.074,228.731z"/> <path d="M479.429,256.891c-16.108,0.174-29.629,12.185-31.701,28.16C432.225,390.403,334.253,463.24,228.901,447.738   c-35.944-5.289-69.662-20.626-97.27-44.244l24.853-24.853c8.33-8.332,8.328-21.84-0.005-30.17   c-3.999-3.998-9.423-6.245-15.078-6.246H43.568c-11.782,0-21.333,9.551-21.333,21.333v97.835   c0.003,11.782,9.556,21.331,21.338,21.329c5.655-0.001,11.079-2.248,15.078-6.246l27.733-27.733   c105.735,94.285,267.884,85.004,362.17-20.732c33.417-37.475,55.101-83.933,62.363-133.615   c2.876-17.605-9.064-34.208-26.668-37.084C482.655,257.051,481.044,256.91,479.429,256.891z"/> </g></svg> </button>
+						</div>
+					</div>
+
+					<div class="voxiom__controls">
+						<button class="voxiom__control-btn back-btn toggle-element disable-switch" data-toggle_element="base-window" data-toggle_clear=".voxiom__window"> <svg xmlns="http://www.w3.org/2000/svg" id="Bold" viewBox="0 0 24 24" width="512" height="512"><path d="M10.482,19.5a1.5,1.5,0,0,1-1.06-.439L4.836,14.475a3.505,3.505,0,0,1,0-4.95L9.422,4.939a1.5,1.5,0,0,1,2.121,2.122L6.957,11.646a.5.5,0,0,0,0,.708l4.586,4.585A1.5,1.5,0,0,1,10.482,19.5Z"/><path d="M17.482,19.5a1.5,1.5,0,0,1-1.06-.439l-6-6a1.5,1.5,0,0,1,0-2.122l6-6a1.5,1.5,0,1,1,2.121,2.122L13.6,12l4.939,4.939A1.5,1.5,0,0,1,17.482,19.5Z"/></svg> </button>
+
+					</div>			
+				</div>
+
+			</div>
 
 		</div>
 
 	</div>
 	<script src="/assets/js/utils.js"></script>
-	<script src="assets/js/features/changebg/popup__bg-change.js"></script>
+	<script src="assets/js/features/change_bg/popup__bg-change.js"></script>
 	<script src="/assets/js/pop_up.js"></script>
 </body>
 </html>
