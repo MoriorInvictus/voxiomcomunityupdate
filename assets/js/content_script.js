@@ -60,6 +60,8 @@ socket_tasks = {
     'resetFont': handleResetFont,
     'updateGlobalFontSize': handleGlobalFontSizeChanging,
     'handleChatFontSizeChanging': handleChatFontSizeChanging,
+    'handleBgChanging': handleBgChange,
+    'handleResetBg': handleResetBg,
 };
 
 
@@ -70,24 +72,6 @@ chrome.runtime.onMessage.addListener(function(request,sender,sendResponse) {
     }
 });
 
-
-function updateStorage(data){
-	if(data){
-		for (const [key, value] of Object.entries(data)) {
-		    localStorage.setItem(key, value);
-		}	
-
-	}
-
-	return false;
-}
-
-function getFromStorage(storageElement){
-	if(storageElement){
-		return localStorage.getItem(storageElement);	
-	}
-	return false;
-}
 
 
 function updateGlobalFontSize() {

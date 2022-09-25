@@ -1,27 +1,37 @@
 {
 	"name": "Voxiom Community Updater",
 	"description": "Voxiom Community Updater",
-	"version": "0.0.5",
+	"version": "0.0.6",
 	"manifest_version": 3,
 	"permissions": ["declarativeContent", "browsingData", "tabs", "scripting", "storage"],
-	"host_permissions": ["*://*.voxiom.io/*"],
+	"host_permissions": ["*://*/*"],
 	"content_scripts": [
 		{
 			"run_at": "document_end",
 			"matches": ["*://*.voxiom.io/*"],
 			"js": [
 				"assets/js/utils.js",
+				"assets/js/features/changebg/injected__bg-change.js",
+				"assets/js/features/changebg/popup__bg-change.js",
 				"assets/js/content_script.js"
+			],
+			"css": [
+				"assets/css/features/changebg/main.css"
 			]
 		}
 	],
 	"web_accessible_resources": [{
-		"resources": ["assets/js/content_script.js"],
+		"resources": [
+			"assets/js/content_script.js"
+		],
 		"matches": ["*://*.voxiom.io/*"]
 	}],	
 	"externally_connectable": {
 	  "matches": ["*://*.voxiom.io/*"]
 	},
+	"background": {
+		"service_worker": "assets/js/background.js"
+	},	
 	"action": {
 		"default_title": "Voxiom Community Updater",
 		"default_icon": "assets/icons/favicon-32x32.png",
