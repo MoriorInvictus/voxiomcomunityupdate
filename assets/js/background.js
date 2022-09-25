@@ -15,8 +15,13 @@ async function sendMessageToActiveTab(messageArgs, callback) {
 chrome.runtime.onConnect.addListener(function(port) {
   	port.onMessage.addListener(async function(msg) {
 	    if (msg.task in socket_tasks){
-	        rslt = await socket_tasks[msg.task](...msg.args);
-	        port.postMessage({result: rslt, task: msg.task});
+            try{
+    	        rslt = await socket_tasks[msg.task](...msg.args);
+    	        port.postMessage({result: rslt, task: msg.task});
+            }
+            catch(e){
+                return false;
+            }
 	    }
   	});
 })
@@ -29,7 +34,11 @@ const convertImageToBase64Image = async (url) => {
     reader.readAsDataURL(blob);
     reader.onload = async () => {
         const base64data = await reader.result;
-        return await sendMessageToActiveTab({ task: 'handleBgChanging', args: [base64data] }, _ => {console.log('must to update')})
+        try{
+            return await sendMessageToActiveTab({ task: 'handleBgChanging', args: [base64data, url] }, _ => {console.log('must to update')})
+        } catch(e){
+            return false;
+        }
     }
 }
 

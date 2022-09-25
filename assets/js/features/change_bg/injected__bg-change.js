@@ -1,11 +1,11 @@
 
 
-function handleBgChange(imageUrl){
+function handleBgChange(base64Img, imageUrl){
 
 	updateStorage({
 		'voxiomBgImage': imageUrl
 	})
-	updateHomePageBg();
+	updateHomePageBg(base64Img);
 	
 
 }
@@ -17,16 +17,24 @@ function handleResetBg(base64Image){
 		'voxiomBgImage': base64Image
 	})
 
-	updateHomePageBg();
+	updateHomePageBg(base64Image);
 
 }
 
 
 
-function updateHomePageBg() {
-	bgImageFromCache = getFromStorage('voxiomBgImage');
+function updateHomePageBg(base64Img) {
+	if(base64Img){
+		bgImageFromCache = base64Img;
+	}
+	else{
+		bgImageFromCache = getFromStorage('voxiomBgImage');
+		if(bgImageFromCache === undefined) return false;
+		return bgImageFromCache = port.postMessage({ task: 'convertImageToBase64', args: [bgImageFromCache] });
 
-	if(bgImageFromCache === undefined) return false;
+	}
+
+
 
 	bgImageChangeStyles = {
 
@@ -38,7 +46,7 @@ function updateHomePageBg() {
 	objectToTagStyles('.bNczYf', bgImageChangeStyles);
 }
 
-updateHomePageBg();
+updateHomePageBg(false);
 
 
 
