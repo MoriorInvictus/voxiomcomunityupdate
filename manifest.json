@@ -1,7 +1,7 @@
 {
 	"name": "Voxiom Community Updater",
 	"description": "Voxiom Community Updater",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"manifest_version": 3,
 	"permissions": ["declarativeContent", "browsingData", "tabs", "scripting", "storage", "unlimitedStorage"],
 	"host_permissions": ["*://*/*"],
@@ -12,11 +12,16 @@
 			"js": [
 				"assets/js/utils.js",
 				"assets/js/long_term_messages.js",
+
+				"assets/js/features/change_bg/popup__bg-change.js",
+
 				"assets/js/features/change_bg/injected__bg-change.js",
 				"assets/js/features/the_font_changing/injected__ft-change.js",
 				"assets/js/features/the_font_size_changing/injected__fs-change.js",
-				"assets/js/features/change_bg/popup__bg-change.js",
 				"assets/js/features/border_radius/injected__br-change.js",
+				"assets/js/features/crosshair/injected__ch-change.js",
+
+
 				"assets/js/content_script.js"
 			],
 			"css": [

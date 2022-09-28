@@ -459,12 +459,48 @@ input[type=number] {
 
 
 
+.file-input-label {
+
+	margin-top: 20px;
+	display: block;
+	cursor: pointer;
+
+}
+
+
+.file-input-label input{
+
+	width: 0;
+	height: 0;
+	overflow: hidden;
+	visibility: hidden;
+	position: absolute;
+	left: -100%;
+
+
+}
+
+
+.file-input-label span{
+
+    text-align: center;
+    color: #041C40;
+    font-size: 16px;
+    font-weight: 700;
+    border:  2px solid #041C40;
+    border-radius: 0.6em;
+	padding: 15px;
+	transition: .3s;
+
+}
 
 
 
+.file-input-label:hover span{
 
+	border-color: limegreen;
 
-
+}
 
 
 

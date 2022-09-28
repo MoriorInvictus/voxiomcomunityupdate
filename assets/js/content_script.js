@@ -6,6 +6,7 @@ socket_tasks = {
     'handleBgChanging': handleBgChange,
     'handleResetBg': handleResetBg,
     'handleBorderRadiusUpdate': handleBorderRadiusUpdate,
+    'handleCrosshairChanging': handleCrosshairChanging,
 };
 
 

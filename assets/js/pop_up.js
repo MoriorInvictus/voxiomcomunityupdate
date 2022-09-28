@@ -82,36 +82,75 @@ if(fontsSizeInputs && fontsSizeInputs.length > 0){
 }
 
 
+async function typeInputHandler(currentUpdateInput, inputUpdates) {
+	if(currentUpdateInput && currentUpdateInput.value){
+		if(inputUpdates.processBeforeSend){
+			newInputValue = await inputUpdates.processBeforeSend(currentUpdateInput.value)
+		} else {
+			newInputValue = currentUpdateInput.value;
+		}					
+	} else {
+		newInputValue = inputUpdates.defaultValue ? inputUpdates.defaultValue : _DEFAULT_INPUT_VALUE;
+	}
+
+	return newInputValue;
+}
+
+
+
+async function handleInputUpdateOnEvent(inputUpdates, target) {
+	currentUpdateInput = getElementById(inputUpdates.inputId);
+
+	switch (inputUpdates.eventType){
+		case 'onclick':
+			newInputValue = await typeInputHandler(currentUpdateInput, inputUpdates);
+			break;
+		case 'onchange':
+			newInputValue = await inputUpdates.fileInputHandler(target);
+			break;
+		default:
+			newInputValue = inputUpdates.defaultValue;
+			break;
+	}
+
+	if (inputUpdates.processBeforeSendDiableSendToContent){
+		return true;
+	}
+
+	if(inputUpdates.updateLocalStorageBeforeSending){
+		currentInputUpdateStorageItem = inputUpdates.localStorageItem;
+		updateStorage({currentInputUpdateStorageItem:newInputValue}, inputUpdates.callback);
+	}
+
+
+	await sendMessageToActiveTab({ task: inputUpdates.taskUpdateName, args: [newInputValue] }, inputUpdates.callback);
+}
+
+
 function initInputUpdateHandlers(inputsUpdates) {
 	inputsUpdates.forEach(inputUpdates => {
 
-		currentUpdateBtn = getElementById(inputUpdates.updateBtnId);
-		if(currentUpdateBtn){
-			currentUpdateBtn.onclick = async function(e) {
-				currentUpdateInput = getElementById(inputUpdates.inputId);
-				if(currentUpdateInput && currentUpdateInput.value){
-					if(inputUpdates.processBeforeSend){
-						newInputValue = await inputUpdates.processBeforeSend(currentUpdateInput.value)
-					} else {
-						newInputValue = currentUpdateInput.value;
-					}					
-				} else {
-					newInputValue = inputUpdates.defaultValue ? inputUpdates.defaultValue : _DEFAULT_INPUT_VALUE;
-				}
+		currentEventObjectHandler = getElementById(inputUpdates.updateBtnId ? inputUpdates.updateBtnId : inputUpdates.inputId);
 
 
-				if (inputUpdates.processBeforeSendDiableSendToContent){
-					return true;
-				}
-
-
-				if(inputUpdates.updateLocalStorageBeforeSending){
-					currentInputUpdateStorageItem = inputUpdates.localStorageItem;
-					updateStorage({currentInputUpdateStorageItem:newInputValue}, inputUpdates.callback);
-				}
-				await sendMessageToActiveTab({ task: inputUpdates.taskUpdateName, args: [newInputValue] }, inputUpdates.callback);
+		if(currentEventObjectHandler){
+			switch (inputUpdates.eventType){
+				case 'onclick':
+					currentEventObjectHandler.onclick = async function(e) {
+						await handleInputUpdateOnEvent(inputUpdates, e.target);
+					};
+					break;
+				case 'onchange':
+					currentEventObjectHandler.onchange = async function(e) {
+						await handleInputUpdateOnEvent(inputUpdates, e.target);
+					};
+					break;
+				default:
+					return false;
+					break;		
 			}
 		}
+
 
 
 
@@ -141,6 +180,7 @@ inputUpdateTasks = [
 	
 	{
 		'updateBtnId': 'change-bg',
+		'eventType': 'onclick',
 		'resetBtnId': 'resetBgBtn',
 		'inputId': 'bgimageurl',
 		'taskUpdateName': 'handleBgChanging',
@@ -157,6 +197,7 @@ inputUpdateTasks = [
 	},
 	{
 		'updateBtnId': 'change-font',
+		'eventType': 'onclick',
 		'resetBtnId': 'resetFontBtn',
 		'processBeforeSend': false,
 		'defaultValue': 'lato,Helvetica,sans-serif',
@@ -172,6 +213,7 @@ inputUpdateTasks = [
 	},
 	{
 		'updateBtnId': 'changeFontGlobalSizeBtn',
+		'eventType': 'onclick',
 		'resetBtnId': 'resetFontGlobalSizeBtn',
 		'processBeforeSend': false,
 		'defaultValue': 15,
@@ -187,6 +229,7 @@ inputUpdateTasks = [
 	},	
 	{
 		'updateBtnId': 'changeChatMessageFontSizeBtn',
+		'eventType': 'onclick',
 		'resetBtnId': 'resetChatMessageFontSize',
 		'inputId': 'changeChatMessageFontSize',
 		'taskUpdateName': 'handleChatFontSizeChanging',
@@ -200,6 +243,7 @@ inputUpdateTasks = [
 	},
 	{
 		'updateBtnId': 'changeBorderRadius',
+		'eventType': 'onclick',
 		'resetBtnId': 'resetBorderRadius',
 		'processBeforeSend': false,
 		'defaultValue': 0,
@@ -211,6 +255,24 @@ inputUpdateTasks = [
 		'updateLocalStorageItemCallback': _ => {log('Storage was updated;')},
 		'getLocalStorageItemCallback': result => {log('Value currently is ' + result.key)},
 		'localStorageItem': 'voxiomBorderRadius',
+		'callback': response => {log('Done')},
+	},	
+	{
+		'updateBtnId': false,
+		'eventType': 'onchange',
+		'fileInputHandler': crosshairUpdateHandler,
+		'resetBtnId': 'crosshairResetBtn',
+		'processBeforeSend': false,
+		'defaultValue': false,
+		'processBeforeSendDiableSendToContent': true,
+		'inputId': 'crosshairFile',
+		'taskUpdateName': 'handleCrosshairChanging',
+		'taskResetName': 'handleCrosshairChanging',
+		'resetTaskArgs': [false],
+		'updateLocalStorageBeforeSending': true,
+		'updateLocalStorageItemCallback': _ => {log('Storage was updated;')},
+		'getLocalStorageItemCallback': result => {log('Value currently is ' + result.key)},
+		'localStorageItem': 'voxiomDefaultCrosshair',
 		'callback': response => {log('Done')},
 	},	
 

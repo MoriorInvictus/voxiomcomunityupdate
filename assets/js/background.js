@@ -59,6 +59,8 @@ const convertImageToBase64Image = async (url) => {
 
 
 
+
+
 socket_tasks = {
     'convertImageToBase64': convertImageToBase64Image,
 };
