@@ -8,8 +8,7 @@ function updateGlobalFontSize() {
 
 	globalFontSizeStyle = {
 
-	    "font-size": `${globalFontSizeFromCache}px !important`,
-	    "text-align": 'center'
+	    "font-size": `${globalFontSizeFromCache}px !important`
 	};
 
 	globalFontSizeStyle2 = {
